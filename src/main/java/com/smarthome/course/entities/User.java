@@ -1,4 +1,4 @@
-package entities;
+package com.smarthome.course.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
