@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.noContent;
 
 @RestController
 @RequestMapping("/users")
@@ -27,24 +31,22 @@ public class UserResource {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping("/user")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     public ResponseEntity<User> insert(@RequestBody User user) {
         userService.insert(user);
-        return ResponseEntity.ok(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
-    @PutMapping("/user/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public User update(@RequestBody User user, @PathVariable Long id) {
-        userService.update(user,id);
-        return user;
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
+        user = userService.update(user,id);
+        return ResponseEntity.accepted().body(user);
     }
 
-    @PostMapping("/remove/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public String delete(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);
-        return "Success. User deleted!!!";
+        return ResponseEntity.noContent().build();
     }
 }
