@@ -1,11 +1,14 @@
 package com.smarthome.course.entities;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -22,7 +25,9 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
-
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
     public User() {
     }
 
