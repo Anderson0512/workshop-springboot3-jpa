@@ -1,5 +1,6 @@
 package com.smarthome.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,8 +27,10 @@ public class User implements Serializable {
     private String phone;
     private String password;
     @Setter(AccessLevel.NONE)
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
+
     public User() {
     }
 
