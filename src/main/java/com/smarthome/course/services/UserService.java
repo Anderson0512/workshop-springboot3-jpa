@@ -1,13 +1,11 @@
 package com.smarthome.course.services;
 
 import com.smarthome.course.entities.User;
-import com.smarthome.course.exception.BusinessException;
 import com.smarthome.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -31,23 +29,21 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void update(User user, Long id) {
-        User entityBd = this.findById(id);
+    public User update(User user, Long id) {
+        User entityBd = userRepository.getReferenceById(id);
 
-        if (entityBd.getId().equals(user.getId())){
-            userRepository.save(user);
-        }else {
-            throw new BusinessException("Identifiers for change are divergent!");
-        }
+        updateData(user, entityBd);
+
+        return userRepository.save(entityBd);
+    }
+
+    private static void updateData(User user, User entityBd) {
+        entityBd.setName(user.getName());
+        entityBd.setEmail(user.getEmail());
+        entityBd.setPhone(user.getPhone());
     }
 
     public void delete(Long id) {
-        User entityBd = this.findById(id);
-
-        if (Objects.nonNull(entityBd.getId())){
-            userRepository.delete(entityBd);
-        }else {
-            throw new BusinessException("Identifiers of Identity not found!");
-        }
+        userRepository.deleteById(id);
     }
 }
