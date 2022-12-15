@@ -4,6 +4,7 @@ import com.smarthome.course.entities.User;
 import com.smarthome.course.exception.BusinessException;
 import com.smarthome.course.exception.ResourceNotFoundException;
 import com.smarthome.course.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -34,11 +35,15 @@ public class UserService {
     }
 
     public User update(User user, Long id) {
-        User entityBd = userRepository.getReferenceById(id);
+        try {
+            User entityBd = userRepository.getReferenceById(id);
 
-        updateData(user, entityBd);
+            updateData(user, entityBd);
 
-        return userRepository.save(entityBd);
+            return userRepository.save(entityBd);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private static void updateData(User user, User entityBd) {
