@@ -1,6 +1,7 @@
 package com.smarthome.course.services;
 
 import com.smarthome.course.entities.User;
+import com.smarthome.course.exception.ResourceNotFoundException;
 import com.smarthome.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public void insert(User user) {
