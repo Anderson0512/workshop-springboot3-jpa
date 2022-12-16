@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
-public class Product implements Serializable {
+public class Product implements Serializable,Comparable<Product> {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -117,5 +117,10 @@ public class Product implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Product other) {
+        return this.getId().compareTo(other.getId());
     }
 }
