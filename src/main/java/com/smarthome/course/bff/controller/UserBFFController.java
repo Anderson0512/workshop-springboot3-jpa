@@ -6,12 +6,13 @@ import com.smarthome.course.bff.model.dto.UserBFFResponseDTO;
 import com.smarthome.course.bff.model.dto.UserInsertBFFResponseDTO;
 import com.smarthome.course.bff.service.UserBFFService;
 import com.smarthome.course.exception.BusinessException;
+import com.smarthome.course.resources.BaseControllerStandardResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
-public class UserBFFController {
+public class UserBFFController extends BaseControllerStandardResource {
 
     @Autowired
     private UserBFFService userBFFService;

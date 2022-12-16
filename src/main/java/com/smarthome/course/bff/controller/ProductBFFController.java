@@ -4,6 +4,7 @@ import com.smarthome.course.bff.model.dto.*;
 import com.smarthome.course.bff.model.vo.ProductBFFVo;
 import com.smarthome.course.bff.service.ProductBFFService;
 import com.smarthome.course.exception.BusinessException;
+import com.smarthome.course.resources.BaseControllerStandardResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-public class ProductBFFController {
+public class ProductBFFController extends BaseControllerStandardResource {
 
     @Autowired
     private ProductBFFService productBFFService;

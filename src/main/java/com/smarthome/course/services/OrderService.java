@@ -20,4 +20,8 @@ public class OrderService {
     public Order findById(Long id) {
         return orderRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+
+    public Order insert(Order order){
+        return orderRepository.save(order);
+    }
 }
