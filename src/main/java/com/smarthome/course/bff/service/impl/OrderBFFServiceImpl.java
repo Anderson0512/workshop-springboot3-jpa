@@ -1,12 +1,9 @@
 package com.smarthome.course.bff.service.impl;
 
-import com.smarthome.course.bff.model.dto.OrderInsertBFFRequestDTO;
-import com.smarthome.course.bff.model.dto.OrderInsertBFFResponseDTO;
-import com.smarthome.course.bff.model.dto.OrderListBFFResponseDTO;
-import com.smarthome.course.bff.model.mapper.OrderInsertBFFRequestMapper;
-import com.smarthome.course.bff.model.mapper.OrderInsertBFFResponseMapper;
-import com.smarthome.course.bff.model.mapper.OrderListBFFResponseMapper;
+import com.smarthome.course.bff.model.dto.*;
+import com.smarthome.course.bff.model.mapper.*;
 import com.smarthome.course.bff.service.OrderBFFService;
+import com.smarthome.course.dto.AutenticationDTO;
 import com.smarthome.course.entities.Order;
 import com.smarthome.course.entities.User;
 import com.smarthome.course.exception.BusinessException;
@@ -41,5 +38,21 @@ public class OrderBFFServiceImpl implements OrderBFFService {
 
         List<Order> orders = orderService.findAll();
         return new OrderListBFFResponseMapper(orders).toFrontend();
+    }
+
+    @Override
+    public OrderInsertBFFResponseDTO update(OrderUpdateBFFRequestDTO request, Long id) throws BusinessException {
+
+        Order order = orderService.update(new OrderUpdateBFFRequestMapper(request).toBusiness(),id);
+
+        return new OrderInsertBFFResponseMapper(order).toFrontend();
+    }
+
+    @Override
+    public AuthorizationBFFDeleteResponseDTO delete(Long id) throws BusinessException {
+
+        AutenticationDTO auth = orderService.delete(id);
+
+        return new BaseBFFDeleteResponseMapper(auth).toFrontend();
     }
 }

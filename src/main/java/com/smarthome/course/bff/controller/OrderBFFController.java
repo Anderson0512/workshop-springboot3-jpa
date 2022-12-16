@@ -1,8 +1,6 @@
 package com.smarthome.course.bff.controller;
 
-import com.smarthome.course.bff.model.dto.OrderInsertBFFRequestDTO;
-import com.smarthome.course.bff.model.dto.OrderInsertBFFResponseDTO;
-import com.smarthome.course.bff.model.dto.OrderListBFFResponseDTO;
+import com.smarthome.course.bff.model.dto.*;
 import com.smarthome.course.bff.service.OrderBFFService;
 import com.smarthome.course.exception.BusinessException;
 import com.smarthome.course.resources.BaseControllerStandardResource;
@@ -24,5 +22,15 @@ public class OrderBFFController extends BaseControllerStandardResource {
     @PostMapping
     public OrderInsertBFFResponseDTO insert(@RequestBody OrderInsertBFFRequestDTO request) throws BusinessException {
         return orderBFFService.insert(request);
+    }
+
+    @PutMapping("/{id}")
+    public OrderInsertBFFResponseDTO update(OrderUpdateBFFRequestDTO request, Long id) throws BusinessException{
+        return orderBFFService.update(request, id);
+    }
+
+    @DeleteMapping("/{id}")
+    AuthorizationBFFDeleteResponseDTO delete(@PathVariable Long id) throws BusinessException {
+        return orderBFFService.delete(id);
     }
 }
