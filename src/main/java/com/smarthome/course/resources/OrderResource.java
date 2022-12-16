@@ -1,7 +1,6 @@
 package com.smarthome.course.resources;
 
 import com.smarthome.course.entities.Order;
-import com.smarthome.course.entities.User;
 import com.smarthome.course.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

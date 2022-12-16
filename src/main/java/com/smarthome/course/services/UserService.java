@@ -1,5 +1,6 @@
 package com.smarthome.course.services;
 
+import com.smarthome.course.dto.AutenticationDTO;
 import com.smarthome.course.entities.User;
 import com.smarthome.course.exception.BusinessException;
 import com.smarthome.course.exception.ResourceNotFoundException;
@@ -10,6 +11,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -30,8 +34,9 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void insert(User user) {
-        userRepository.save(user);
+    public User insert(User user) {
+
+        return userRepository.save(user);
     }
 
     public User update(User user, Long id) {
@@ -52,12 +57,20 @@ public class UserService {
         entityBd.setPhone(user.getPhone());
     }
 
-    public void delete(Long id) {
+    public AutenticationDTO delete(Long id) {
         try {
+            AutenticationDTO auth = new AutenticationDTO();
+
             userRepository.deleteById(id);
+
+            auth.setMoment(Instant.now());
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+            auth.setKey(String.valueOf(algorithm.hashCode()));
+            return auth;
+
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | NoSuchAlgorithmException e) {
             throw new BusinessException(e.getMessage());
         }
     }

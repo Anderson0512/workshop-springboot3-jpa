@@ -24,6 +24,8 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
+    private Double signal;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
@@ -37,11 +39,12 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, Double signal, User client) {
         super();
         this.id = id;
         this.moment = moment;
         this.client = client;
+        this.signal = signal;
         setOrderStatus(orderStatus);
     }
 
@@ -73,6 +76,14 @@ public class Order implements Serializable {
         return OrderStatus.valueOf(orderStatus);
     }
 
+    public Double getSignal() {
+        return signal;
+    }
+
+    public void setSignal(Double signal) {
+        this.signal = signal;
+    }
+
     public void setOrderStatus(OrderStatus orderStatus) {
         if (orderStatus != null) {
             this.orderStatus = orderStatus.getCode();
@@ -97,6 +108,10 @@ public class Order implements Serializable {
             sum += orderItem.getSubTotal();
         }
         return sum;
+    }
+    public Double getTotalFinal() {
+
+        return getTotal() - signal;
     }
 
     @Override

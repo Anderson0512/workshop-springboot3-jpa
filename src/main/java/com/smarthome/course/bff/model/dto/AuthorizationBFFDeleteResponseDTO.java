@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class ProductBFFDeleteResponseDTO {
+public class AuthorizationBFFDeleteResponseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss",timezone = "GMT-03:00")
     private Instant hour;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy",timezone = "GMT-03:00")

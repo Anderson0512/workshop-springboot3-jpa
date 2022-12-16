@@ -56,10 +56,10 @@ public class ProductBFFServiceImpl implements ProductBFFService {
     }
 
     @Override
-    public ProductBFFDeleteResponseDTO delete(List<ProductBFFDeleteRequestDTO> request) throws BusinessException {
+    public AuthorizationBFFDeleteResponseDTO delete(List<ProductBFFDeleteRequestDTO> request) throws BusinessException {
 
         AutenticationDTO auth = productService.delete(new ProductBFFDeleteRequestMapper(request).getIds());
 
-        return new ProductBFFDeleteResponseMapper(auth).toFrontend();
+        return new BaseBFFDeleteResponseMapper(auth).toFrontend();
     }
 }

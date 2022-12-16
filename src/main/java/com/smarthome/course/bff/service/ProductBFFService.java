@@ -15,5 +15,5 @@ public interface ProductBFFService {
 
     List<ProductBFFVo> updateList(List<ProductBFFListUpdateRequestDTO> request) throws BusinessException;
 
-    ProductBFFDeleteResponseDTO delete(List<ProductBFFDeleteRequestDTO> request) throws BusinessException;
+    AuthorizationBFFDeleteResponseDTO delete(List<ProductBFFDeleteRequestDTO> request) throws BusinessException;
 }
